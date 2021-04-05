@@ -18,3 +18,40 @@ console.log(
     " и " +
     power3OfProductStr.toString().charAt(1)
 );
+
+let lang = "ru";
+let daysOfWeek = [];
+let daysOfWeekRu = ["Пн", "Вт", "СР", "Чт", "Пт", "Сб", "Вс"];
+let daysOfWeekEn = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+if ((lang = "ru")) {
+  daysOfWeek = daysOfWeekRu;
+} else {
+  daysOfWeek = daysOfWeekEn;
+}
+console.log("~ daysOfWeek if: ", daysOfWeek);
+
+switch (lang) {
+  case "ru":
+    daysOfWeek = daysOfWeekRu;
+
+    break;
+  case "en":
+    daysOfWeek = daysOfWeekEn;
+    break;
+}
+console.log("~ daysOfWeek switch: ", daysOfWeek);
+
+daysOfWeek["ru"] = daysOfWeekRu;
+daysOfWeek["en"] = daysOfWeekEn;
+console.log("~ daysOfWeek arrays : ", daysOfWeek[lang]);
+
+let namePerson = "Сергей";
+
+console.log(
+  namePerson === "Артем"
+    ? "Директор"
+    : namePerson === "Максим"
+    ? "Преподаватель"
+    : "Студент"
+);
