@@ -1,4 +1,4 @@
-let num = 266219;
+/* let num = 266219;
 
 let numberOfString = num.toString();
 let lenght = numberOfString.length;
@@ -54,4 +54,23 @@ console.log(
     : namePerson === "Максим"
     ? "Преподаватель"
     : "Студент"
+);
+ */
+
+//let stringIn = "    vvjlbli  kbibob;u   ";
+function stringCut(str) {
+  if (typeof str !== "string") {
+    return "Аргумент не строка";
+  } else {
+    str = str.trim();
+    return str.length > 30 ? str.slice(0, 30) + "..." : str;
+  }
+}
+
+console.log(stringCut("    vvjlbli  kbibob;u   "));
+console.log(stringCut(1754));
+console.log(
+  stringCut(
+    "    vvjlbli  kbibobu ubibibb rfd6yft yg8g87y9898u98un 87y8878y887   "
+  )
 );
