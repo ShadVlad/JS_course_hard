@@ -58,19 +58,47 @@ console.log(
  */
 
 //let stringIn = "    vvjlbli  kbibob;u   ";
-function stringCut(str) {
-  if (typeof str !== "string") {
-    return "Аргумент не строка";
-  } else {
-    str = str.trim();
-    return str.length > 30 ? str.slice(0, 30) + "..." : str;
+// function stringCut(str) {
+//   if (typeof str !== "string") {
+//     return "Аргумент не строка";
+//   } else {
+//     str = str.trim();
+//     return str.length > 30 ? str.slice(0, 30) + "..." : str;
+//   }
+// }
+
+// console.log(stringCut("    vvjlbli  kbibob;u   "));
+// console.log(stringCut(1754));
+// console.log(
+//   stringCut(
+//     "    vvjlbli  kbibobu ubibibb rfd6yft yg8g87y9898u98un 87y8878y887   "
+//   )
+// );
+
+let arr = [
+  "23456",
+  "1233333",
+  "466666789",
+  "5617890",
+  "2567890",
+  "5678765890",
+  "4561237890",
+];
+for (let i = 0; i < arr.length; i++) {
+  if (arr[i].charAt(0) == 2 || arr[i].charAt(0) == 4) {
+    console.log(arr[i]);
   }
 }
 
-console.log(stringCut("    vvjlbli  kbibob;u   "));
-console.log(stringCut(1754));
-console.log(
-  stringCut(
-    "    vvjlbli  kbibobu ubibibb rfd6yft yg8g87y9898u98un 87y8878y887   "
-  )
-);
+let prime = [1, 2];
+console.log(" : " + prime);
+for (let i = 3; i <= 100; i++) {
+  let div = true;
+  for (let j = 1; j < prime.length; j++) {
+    if (i % prime[j] == 0) div = false;
+  }
+  if (div) {
+    prime.push(i);
+    console.log(i + " - простое,  делители этого числа: " + 1 + " и " + i);
+  }
+}
