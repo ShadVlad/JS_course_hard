@@ -1,40 +1,28 @@
 "use strict";
-let isNumber = function (n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-};
-
-let getHiddenNumber = function () {
-  return parseInt(Math.random() * 100 + 1);
-};
-let getUserNumber = function () {
-  let userAnswer = prompt("Угадай число от 1 до 100");
-  if (userAnswer == null) return userAnswer;
-  if (
-    !isNumber(userAnswer) ||
-    parseFloat(userAnswer) > 100 ||
-    parseFloat(userAnswer) < 1
-  ) {
-    confirm("Введи число от 1 до 100!");
-    getUserNumber();
-  }
-  return userAnswer;
-};
 
 function game() {
   let tryCount = 0;
   let maxTryCount = 10;
-  let hiddenNumber = getHiddenNumber();
-  //console.log("hiddenNumber: ", hiddenNumber);
+  let hiddenNumber = parseInt(Math.random() * 100 + 1);
+  console.log("hiddenNumber: ", hiddenNumber);
+
   let guess = function () {
-    tryCount++;
-    let userNumber = getUserNumber();
-    //console.log("userNumber: ", userNumber);
-    if (userNumber === null) {
+    let userAnswer = prompt("Угадай число от 1 до 100");
+    console.log("userAnswer: ", userAnswer);
+    if (userAnswer == null) {
       alert("Игра окончена");
       return;
     }
 
-    if (userNumber == hiddenNumber) {
+    if (userAnswer > 100 || userAnswer < 1) {
+      alert("Введи число от 1 до 100!");
+      return guess();
+    }
+
+    tryCount++;
+    console.log("tryCount: ", tryCount);
+
+    if (userAnswer == hiddenNumber) {
       alert("Поздравляю, Вы угадали!!!");
       if (confirm("Хотели бы сыграть еще?")) {
         tryCount = 0;
@@ -52,20 +40,20 @@ function game() {
       return;
     }
 
-    if (userNumber > hiddenNumber) {
+    if (userAnswer > hiddenNumber) {
       alert(
         "Загаданное число меньше. Попробуй еще. Осталось " +
           (maxTryCount - tryCount) +
           " попытки(ок)"
       );
-    } else if (userNumber < hiddenNumber) {
+    } else if (userAnswer < hiddenNumber) {
       alert(
         "Загаданное число больше. Попробуй еще. Осталось " +
           (maxTryCount - tryCount) +
           " попытки(ок)"
       );
     }
-    guess();
+    return guess();
   };
   guess();
 }
