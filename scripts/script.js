@@ -1,61 +1,28 @@
 "use strict";
+const week = [
+  "Понедельник",
+  "Вторник",
+  "Среда",
+  "Четверг",
+  "Пятница",
+  "Суббота",
+  "Воскресенье",
+];
+const dayOfWeek = document.getElementById("dayOfWeek"); // Получаем div куда всё будем вставлять
+const todayDay = new Date();
 
-function game() {
-  let tryCount = 0;
-  let maxTryCount = 10;
-  let hiddenNumber = parseInt(Math.random() * 100 + 1);
-  console.log("hiddenNumber: ", hiddenNumber);
+week.forEach((item, i) => {
+  // Для каждого дня недели создаем блок
+  let newDay = document.createElement("p");
+  // если текущий день для привязки стилей
+  if (i == todayDay.getDay() - 1) {
+    newDay.classList.add("today");
+  }
+  // Если выходные то
+  if (item == "Суббота" || item == "Воскресенье") {
+    newDay.classList.add("weekend");
+  }
+  newDay.textContent = week[i];
 
-  let guess = function () {
-    let userAnswer = prompt("Угадай число от 1 до 100");
-    console.log("userAnswer: ", userAnswer);
-    if (userAnswer == null) {
-      alert("Игра окончена");
-      return;
-    }
-
-    if (userAnswer > 100 || userAnswer < 1) {
-      alert("Введи число от 1 до 100!");
-      return guess();
-    }
-
-    tryCount++;
-    console.log("tryCount: ", tryCount);
-
-    if (userAnswer == hiddenNumber) {
-      alert("Поздравляю, Вы угадали!!!");
-      if (confirm("Хотели бы сыграть еще?")) {
-        tryCount = 0;
-        guess();
-      }
-      return;
-    }
-
-    if (tryCount >= maxTryCount) {
-      alert("Вы проиграли. Правильный ответ: " + hiddenNumber);
-      if (confirm("Хотели бы сыграть еще?")) {
-        tryCount = 0;
-        guess();
-      }
-      return;
-    }
-
-    if (userAnswer > hiddenNumber) {
-      alert(
-        "Загаданное число меньше. Попробуй еще. Осталось " +
-          (maxTryCount - tryCount) +
-          " попытки(ок)"
-      );
-    } else if (userAnswer < hiddenNumber) {
-      alert(
-        "Загаданное число больше. Попробуй еще. Осталось " +
-          (maxTryCount - tryCount) +
-          " попытки(ок)"
-      );
-    }
-    return guess();
-  };
-  guess();
-}
-
-game();
+  dayOfWeek.appendChild(newDay);
+});
