@@ -91,7 +91,7 @@ const updateDate = function () {
     second,
     secondString
   )}`;
-  console.log("stringA: ", stringA);
+
   let stringB =
     withZero(day) +
     "." +
