@@ -1,4 +1,9 @@
 "use strict";
+const dayOfWeek = document.getElementById("dayOfWeek");
+const outputA = document.createElement("p");
+const outputB = document.createElement("p");
+dayOfWeek.appendChild(outputA);
+dayOfWeek.appendChild(outputB);
 const updateDate = function () {
   const week = [
     "Воскресенье",
@@ -77,31 +82,30 @@ const updateDate = function () {
       stringMonth = "декабря";
       break;
   }
-  console.log(
-    `Сегодня  ${
-      week[todayDay.getDay()]
-    }, ${day} ${stringMonth} ${year} года, ${hour} ${declension(
-      hour,
-      hourString
-    )} ${minute} ${declension(minute, minuteString)} ${second} ${declension(
-      second,
-      secondString
-    )}`
-  );
-
-  console.log(
+  let stringA = `Сегодня  ${
+    week[todayDay.getDay()]
+  }, ${day} ${stringMonth} ${year} года, ${hour} ${declension(
+    hour,
+    hourString
+  )} ${minute} ${declension(minute, minuteString)} ${second} ${declension(
+    second,
+    secondString
+  )}`;
+  console.log("stringA: ", stringA);
+  let stringB =
     withZero(day) +
-      "." +
-      withZero(month + 1) +
-      "." +
-      withZero(year) +
-      " - " +
-      withZero(hour) +
-      ":" +
-      withZero(minute) +
-      ":" +
-      withZero(second)
-  );
+    "." +
+    withZero(month + 1) +
+    "." +
+    withZero(year) +
+    " - " +
+    withZero(hour) +
+    ":" +
+    withZero(minute) +
+    ":" +
+    withZero(second);
+  outputA.innerHTML = stringA;
+  outputB.innerHTML = stringB;
 };
 setInterval(updateDate, 1000);
 // week.forEach((item, i) => {
