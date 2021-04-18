@@ -1,18 +1,73 @@
 "use strict";
-const color = document.getElementById("color");
-const btnNewColor = document.getElementById("change");
 
-const changeColor = function () {
-  let r = Math.floor(Math.random() * 256);
-  let g = Math.floor(Math.random() * 256);
-  let b = Math.floor(Math.random() * 256);
-  let colorValue = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-  console.log("colorValue: ", colorValue);
-  color.innerHTML = colorValue;
-  document.body.style.backgroundColor = colorValue;
-  //console.log("body: ", body);
+function DomElement(selector, styles) {
+  this.selector = selector;
+  styles = styles || {};
+  this.height = styles.height;
+  this.width = styles.width;
+  this.bg = styles.bg;
+  this.position = styles.position;
+}
+
+DomElement.prototype.createEl = function () {
+  let newElement;
+  if (this.selector[0] === ".") {
+    newElement = document.createElement("div");
+    newElement.classList.add(this.selector.slice(1));
+  } else {
+    newElement = document.createElement("p");
+    newElement.setAttribute("id", this.selector.slice(1));
+  }
+  console.log("newElement: ", newElement);
+  const divNew = document.getElementsByTagName("body")[0];
+  console.log("divNew: ", divNew);
+  //newElement.innerHTML = "bgiuypmhpiohniphm,      puiohpjn        ouhnpuiohn";
+  newElement.style.cssText =
+    "height: " +
+    this.height +
+    "; width: " +
+    this.width +
+    "; background-color: " +
+    this.bg +
+    "; position: " +
+    this.position;
+  //console.log("this.styles: ", newElement.style.cssText);
+  divNew.appendChild(newElement);
+  return newElement;
 };
+let styles = {
+  height: "100px",
+  width: "100px",
+  bg: "green",
+  position: "absolute",
+};
+DomElement.prototype.keyEvent = function (event) {
+  //console.log("==========>>>>>");
+  let left = square.style.left;
+  left = +left.substring(0, left.length - 2);
+  let top = square.style.top;
+  top = +top.substring(0, top.length - 2);
 
-btnNewColor.addEventListener("click", changeColor);
+  switch (event.key) {
+    case "ArrowLeft":
+      if (left >= 10) square.style.left = left - 10 + "px";
+      break;
+    case "ArrowRight":
+      if (left <= 1000) square.style.left = left + 10 + "px";
+      break;
+    case "ArrowUp":
+      if (top >= 10) square.style.top = top - 10 + "px";
+      break;
+    case "ArrowDown":
+      if (top <= 590) square.style.top = top + 10 + "px";
+      break;
+  }
+};
+let domElem = new DomElement(".block", styles);
+//console.log("domElem: ", domElem);
 
-//const dayOfWeek = document.getElementById("dayOfWeek"); // Получаем div куда всё будем вставлять
+let square = domElem.createEl();
+console.log("newElem: ", square);
+
+document.addEventListener("keydown", domElem.keyEvent);
+console.log("domElem.keyEvent: ", domElem.keyEvent);
