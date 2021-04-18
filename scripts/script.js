@@ -1,76 +1,71 @@
 "use strict";
 
-function DomElement(selector, styles) {
-  this.selector = selector;
-  styles = styles || {};
-  this.height = styles.height;
-  this.width = styles.width;
-  this.bg = styles.bg;
-  this.position = styles.position;
-}
+const todoControl = document.querySelector(".todo-control"),
+  headerInput = document.querySelector(".header-input"),
+  todoList = document.querySelector(".todo-list"),
+  todoCompleted = document.querySelector(".todo-completed");
+const todoData =
+  localStorage.getItem("todoData") === null
+    ? []
+    : JSON.parse(localStorage.getItem("todoData"));
 
-DomElement.prototype.createEl = function () {
-  let newElement;
-  if (this.selector[0] === ".") {
-    newElement = document.createElement("div");
-    newElement.classList.add(this.selector.slice(1));
-  } else {
-    newElement = document.createElement("p");
-    newElement.setAttribute("id", this.selector.slice(1));
-  }
-  console.log("newElement: ", newElement);
-  const divNew = document.getElementsByTagName("body")[0];
-  console.log("divNew: ", divNew);
-  //newElement.innerHTML = "bgiuypmhpiohniphm,      puiohpjn        ouhnpuiohn";
-  newElement.style.cssText =
-    "height: " +
-    this.height +
-    "; width: " +
-    this.width +
-    "; background-color: " +
-    this.bg +
-    "; position: " +
-    this.position;
-  //console.log("this.styles: ", newElement.style.cssText);
-  divNew.appendChild(newElement);
-  return newElement;
-};
-let styles = {
-  height: "100px",
-  width: "100px",
-  bg: "green",
-  position: "absolute",
-};
-DomElement.prototype.keyEvent = function (event) {
-  //console.log("==========>>>>>");
-  let left = square.style.left;
-  left = +left.substring(0, left.length - 2);
-  let top = square.style.top;
-  top = +top.substring(0, top.length - 2);
+const render = function () {
+  todoList.textContent = "";
 
-  switch (event.key) {
-    case "ArrowLeft":
-      if (left >= 10) square.style.left = left - 10 + "px";
-      break;
-    case "ArrowRight":
-      if (left <= 1000) square.style.left = left + 10 + "px";
-      break;
-    case "ArrowUp":
-      if (top >= 10) square.style.top = top - 10 + "px";
-      break;
-    case "ArrowDown":
-      if (top <= 590) square.style.top = top + 10 + "px";
-      break;
-  }
+  todoCompleted.textContent = "";
+
+  todoData.forEach((item) => {
+    const li = document.createElement("li");
+    li.classList.add("todo-item");
+    li.innerHTML =
+      '<span class="text-todo">' +
+      item.value +
+      "</span>" +
+      '<div class="todo-buttons">' +
+      '<button class="todo-remove"></button >' +
+      '<button class="todo-complete"></button>' +
+      "</div>";
+    if (item.completed) {
+      todoCompleted.append(li);
+    } else {
+      todoList.append(li);
+    }
+
+    const btnTodoRemove = li.querySelector(".todo-remove");
+    btnTodoRemove.addEventListener("click", function () {
+      console.log("item: ", todoData.indexOf(item));
+      todoData.splice(todoData.indexOf(item), 1);
+      localStorage.setItem("todoData", JSON.stringify(todoData));
+      render();
+    });
+    const btnTodoComplete = li.querySelector(".todo-complete");
+    btnTodoComplete.addEventListener("click", function () {
+      item.completed = !item.completed;
+      localStorage.setItem("todoData", JSON.stringify(todoData));
+      render();
+    });
+  });
 };
-let square;
-let domElem = new DomElement(".block", styles);
-//console.log("domElem: ", domElem);
-document.addEventListener("DOMContentLoaded", function () {
-  square = domElem.createEl();
+todoControl.addEventListener("submit", function (event) {
+  event.preventDefault();
+  if (headerInput.value === "") return;
+  const newTodo = {
+    value: headerInput.value,
+    completed: false,
+  };
+  todoData.push(newTodo);
+  headerInput.value = "";
+  localStorage.setItem("todoData", JSON.stringify(todoData));
+  //console.log("localStorage: ", localStorage);
+  //console.log("todoData: ", todoData);
+  render();
 });
 
-//console.log("newElem: ", square);
+// console.log(
+//   'localStorage.getItem("todoData"): ',
+//   localStorage.getItem("todoData")
+// );
 
-document.addEventListener("keydown", domElem.keyEvent);
-console.log("domElem.keyEvent: ", domElem.keyEvent);
+// if (localStorage.getItem("todoData") !== null)
+//   todoData = JSON.parse(localStorage.getItem("todoData"));
+render();
