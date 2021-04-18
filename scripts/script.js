@@ -63,11 +63,14 @@ DomElement.prototype.keyEvent = function (event) {
       break;
   }
 };
+let square;
 let domElem = new DomElement(".block", styles);
 //console.log("domElem: ", domElem);
+document.addEventListener("DOMContentLoaded", function () {
+  square = domElem.createEl();
+});
 
-let square = domElem.createEl();
-console.log("newElem: ", square);
+//console.log("newElem: ", square);
 
 document.addEventListener("keydown", domElem.keyEvent);
 console.log("domElem.keyEvent: ", domElem.keyEvent);
